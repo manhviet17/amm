@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	    http://www.springframework.org/schema/util
+	    http://www.springframework.org/schema/util/spring-util-3.1.xsd
+	    http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <bean id="propertyConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:voice-search-vn.properties</value>
+            </list>
+        </property>
+    </bean>
+
+	<bean id="voiceSearchController" class="com.demo.voice.web.VoiceSearchController">
+		<property name="analyzerService" ref="analyzerService"/>
+		<property name="dataBean" ref="dataBean"/>
+		<property name="service" ref="service"/>
+		<property name="normalize" ref="normalize"/>
+	</bean>
+	
+    <bean id="analyzerService" class="com.demo.voice.nlu.analyzer.service.impl.AnalyzerServiceImpl">
+        <property name="context" ref="strategyContext" />
+    </bean>
+
+
+    <bean id="strategyContext" class="com.demo.voice.nlu.analyzer.strategy.NluProcessingStrategyContext">
+        <property name="strategies">
+            <util:list>
+                <bean class="com.demo.voice.nlu.analyzer.strategy.GenreProcessingStrategy" />
+                <bean class="com.demo.voice.nlu.analyzer.strategy.MediaTypeProcessingStrategy" />
+                <bean class="com.demo.voice.nlu.analyzer.strategy.CreditProcessingStrategy" />
+            </util:list>
+        </property>
+        <property name="strategiesPost">
+            <util:list>
+            	<bean class="com.demo.voice.nlu.analyzer.strategy.TitleProcessingStrategy" />
+                <bean class="com.demo.voice.nlu.analyzer.strategy.IntentProcessingStrategy" />
+            </util:list>
+        </property>
+    </bean>
+
+    <bean id="dataBean" class="com.demo.voice.nlu.analyzer.dataloader.NluDataBean"
+        init-method="loadAll">
+        <property name="dataMap" ref="dataMap" />
+    </bean>
+    
+    <util:map id="dataMap" map-class="java.util.HashMap"
+        key-type="com.directv.nlu.lookup.common.dataloader.NluDataType">
+        <entry key="LOOKUP_TRIE" value-ref="binaryTrieLoader" />
+        <entry key="PREDICTION" value-ref="predictionLoader" />
+    </util:map>
+
+
+    <bean id="binaryTrieLoader" class="com.directv.nlu.lookup.common.dataloader.service.LookupBinaryTrieDataLoaderServiceImpl">
+        <constructor-arg index="0">
+            <bean
+                class="com.directv.eds.common.fileprocessor.filemanager.FileConfiguration"
+                p:sourceDirectory="${nlu.dsc.ana.trie.binary.files.location}"
+                p:fullFilePrefix="${nlu.dsc.ana.trie.binary.full.file.name.prefix}"
+                p:fileExtension="${nlu.dsc.ana.trie.binary.file.extension}" />
+        </constructor-arg>
+        <constructor-arg index="1" ref="inputStreamParser" />
+        <property name="order" value="18" />
+        <property name="textNormalizeService"><null/></property>
+    </bean>
+
+    <bean id="predictionLoader"
+        class="com.directv.nlu.lookup.common.dataloader.service.BaseDataLoaderServiceImpl">
+        <constructor-arg index="0">
+            <bean
+                class="com.directv.eds.common.fileprocessor.filemanager.FileConfiguration"
+                p:sourceDirectory="${nlu.dsc.ana.crfmodel.files.location}"
+                p:fullFilePrefix="${nlu.dsc.ana.crfmodel.full.file.name.prefix}"
+                p:fileExtension="${nlu.dsc.ana.crfmodel.file.extension}" />
+        </constructor-arg>
+        <constructor-arg index="1">
+            <bean class="com.demo.voice.nlu.analyzer.dataloader.parser.PredictionParser" />
+        </constructor-arg>
+        <property name="order" value="20" />
+    </bean>
+
+    <bean id="xmlInputStreamParser"
+        class="com.directv.nlu.lookup.common.dataloader.parser.InputStreamParser">
+        <constructor-arg value="xml"/>
+    </bean>
+
+    <!-- Pattern Parser -->
+    <bean id="patternParser" class="com.directv.nlu.lookup.common.dataloader.parser.PatternParser" />
+
+    <bean id="inputStreamParser" class="com.directv.nlu.lookup.common.dataloader.parser.InputStreamParser" />
+    
+    
+    <!-- for process api -->
+    <bean id="cache" class="com.demo.voice.process.cache.Cache" init-method="buildCache">
+    	<property name="accountInfoFolder" value="${accountInfo.folder}"/>
+    	<property name="accountFile" value="${account.file}"/>
+    	<property name="otherFolder" value="${other.folder}"/>
+    	<property name="normalizeNumberFile" value="${normalizeData.number}"/>
+    	<property name="normalizeAmountFile" value="${normalizeData.amount}"/>
+    	<property name="unitFile" value="${normalizeData.unit}"/>
+    	<property name="cmdFile" value="${normalizeData.cmd}"/>
+    </bean>
+	
+	<bean id="service" class="com.demo.voice.process.service.Service">
+		<property name="cache" ref="cache"/>
+		<property name="infoValidator" ref="infoValidator"/>
+		<property name="normalize" ref="normalize"/>
+		<property name="xmlProcessor" ref="xmlProcessor"/>
+	</bean>
+	
+	<bean id="infoValidator" class="com.demo.voice.process.utils.InfoValidator">
+		<property name="cache" ref="cache"/>
+	</bean>
+	
+	<bean id="normalize" class="com.demo.voice.process.utils.Normalize" init-method="buildOtherData">
+		<property name="cache" ref="cache"/>
+	</bean>
+	
+	<bean id="xmlProcessor" class="com.demo.voice.process.utils.XMLProcessor">
+	</bean>
+</beans>

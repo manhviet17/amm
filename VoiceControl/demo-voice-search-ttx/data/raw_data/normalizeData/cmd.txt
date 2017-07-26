@@ -1,0 +1,8 @@
+﻿tra cứu tài khoản : CMD_001
+kiểm tra số dư tài khoản : CMD_001
+kiểm tra tài khoản : CMD_001
+khóa thẻ : CMD_002
+chuyển tiền : CMD_003
+chuyển khoản : CMD_003
+chuyển cho tài khoản khác : CMD_003
+chuyển tiền cho tài khoản khác : CMD_003

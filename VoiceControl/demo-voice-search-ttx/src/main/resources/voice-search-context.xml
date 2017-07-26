@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	    http://www.springframework.org/schema/util
+	    http://www.springframework.org/schema/util/spring-util-3.1.xsd
+	    http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <bean id="propertyConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:voice-search-ttx.properties</value>
+            </list>
+        </property>
+    </bean>
+
+	<bean id="nluTaggingController" class = "com.demo.voice.web.VoiceSearchController">
+		<property name="analyzerService" ref="analyzerService"/>
+		<property name="dataBean" ref="dataBean"/>
+	</bean>
+
+    <bean id="analyzerService" class="com.demo.voice.nlu.analyzer.service.impl.AnalyzerServiceImpl">
+        <property name="context" ref="strategyContext" />
+    </bean>
+
+    <bean id="strategyContext" class="com.demo.voice.nlu.analyzer.strategy.NluProcessingStrategyContext">
+        <property name="strategies">
+            <util:list>
+                <bean class="com.demo.voice.nlu.analyzer.strategy.GenreProcessingStrategy" />
+                <bean class="com.demo.voice.nlu.analyzer.strategy.MediaTypeProcessingStrategy" />
+                <bean class="com.demo.voice.nlu.analyzer.strategy.CreditProcessingStrategy" />
+            </util:list>
+        </property>
+        <property name="strategiesPost">
+            <util:list>
+            	<bean class="com.demo.voice.nlu.analyzer.strategy.TitleProcessingStrategy" />
+                <bean class="com.demo.voice.nlu.analyzer.strategy.IntentProcessingStrategy" />
+            </util:list>
+        </property>
+    </bean>
+
+    <bean id="dataBean" class="com.demo.voice.nlu.analyzer.dataloader.NluDataBean"
+        init-method="loadAll">
+        <property name="dataMap" ref="dataMap" />
+        <property name="fuzzyEnableMap" ref="fuzzyEnableMap" />
+        <property name="numberMap" ref="titleNumberMap" />
+    </bean>
+
+    <util:map id="fuzzyEnableMap" map-class="java.util.HashMap"
+        key-type="com.directv.nlu.lookup.common.dto.TypeIndex" value-type="java.lang.Boolean">
+        <entry key="title" value="true" />
+        <entry key="credit" value="true" />
+        <entry key="sportteam" value="true" />
+    </util:map>
+
+    <util:map id="dataMap" map-class="java.util.HashMap"
+        key-type="com.directv.nlu.lookup.common.dataloader.NluDataType">
+        <entry key="LOOKUP_TRIE" value-ref="binaryTrieLoader" />
+        <entry key="PREDICTION" value-ref="predictionLoader" />
+        <!-- <entry key="HOLIDAYS_TRIE" value-ref="holidayLoader" /> -->
+    </util:map>
+
+    <util:map id="titleNumberMap" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String">
+            <entry key="two" value="II,2" />
+            <entry key="three" value="III,3" />
+            <entry key="four" value="IV,4" />
+            <entry key="five" value="V,5" />
+            <entry key="six" value="VI,6" />
+            <entry key="seven" value="VII,7" />
+            <entry key="eight" value="VIII,8" />
+            <entry key="nine" value="IX,9" />
+            <entry key="ten" value="X,10" />
+            <entry key="eleven" value="XI,11" />
+            <entry key="twelve" value="XII,12" />
+            <entry key="thirteen" value="XIII,13" />
+            <entry key="fourteen" value="XIV,14" />
+            <entry key="fifteen" value="XV,15" />
+            <entry key="sixteen" value="XVI,16" />
+            <entry key="seventeen" value="XVII,17" />
+            <entry key="eighteen" value="XVIII,18" />
+            <entry key="nineteen" value="XIX,19" />
+            <entry key="twenty" value="XX,20" />
+    </util:map>
+
+
+    <bean id="binaryTrieLoader" class="com.directv.nlu.lookup.common.dataloader.service.LookupBinaryTrieDataLoaderServiceImpl">
+        <constructor-arg index="0">
+            <bean
+                class="com.directv.eds.common.fileprocessor.filemanager.FileConfiguration"
+                p:sourceDirectory="${nlu.dsc.ana.trie.binary.files.location}"
+                p:fullFilePrefix="${nlu.dsc.ana.trie.binary.full.file.name.prefix}"
+                p:fileExtension="${nlu.dsc.ana.trie.binary.file.extension}" />
+        </constructor-arg>
+        <constructor-arg index="1" ref="inputStreamParser" />
+        <property name="order" value="18" />
+        <property name="textNormalizeService"><null/></property>
+    </bean>
+
+    <bean id="predictionLoader"
+        class="com.directv.nlu.lookup.common.dataloader.service.BaseDataLoaderServiceImpl">
+        <constructor-arg index="0">
+            <bean
+                class="com.directv.eds.common.fileprocessor.filemanager.FileConfiguration"
+                p:sourceDirectory="${nlu.dsc.ana.crfmodel.files.location}"
+                p:fullFilePrefix="${nlu.dsc.ana.crfmodel.full.file.name.prefix}"
+                p:fileExtension="${nlu.dsc.ana.crfmodel.file.extension}" />
+        </constructor-arg>
+        <constructor-arg index="1">
+            <bean class="com.demo.voice.nlu.analyzer.dataloader.parser.PredictionParser" />
+        </constructor-arg>
+        <property name="order" value="20" />
+    </bean>
+
+    <bean id="xmlInputStreamParser"
+        class="com.directv.nlu.lookup.common.dataloader.parser.InputStreamParser">
+        <constructor-arg value="xml"/>
+    </bean>
+
+    <!-- Pattern Parser -->
+    <bean id="patternParser" class="com.directv.nlu.lookup.common.dataloader.parser.PatternParser" />
+
+    <bean id="inputStreamParser" class="com.directv.nlu.lookup.common.dataloader.parser.InputStreamParser" />
+
+</beans>

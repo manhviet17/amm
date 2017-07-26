@@ -1,0 +1,284 @@
+<scxml initial="idle" name="connRestored" version="0.9"
+	xmlns="http://www.w3.org/2005/07/scxml"><!-- node-size-and-position x=0.0 y=0.0 w=1050.0 h=590.0 -->
+	<datamodel>
+		<data id="countInputUser" expr="0" />
+		<data id="countInputDelivery" expr="0" />
+		<data id="countInputReceivedCode" expr="0" />
+		<data id="countInputCode" expr="0" />
+		<data id="message"
+			expr="Sorry I don't recognize your speech, please speak again." />
+	</datamodel>
+
+	<state id="idle"><!-- node-size-and-position x=40.0 y=220.0 w=100.0 h=100.0 -->
+		<datamodel>
+			<data id="message" expr="Welcome to TTX chatbot service" />
+		</datamodel>
+		<transition event="greeting" target="welcome"></transition>
+		<transition event="request-reset" target="askUser"></transition>
+		<transition event="request-reset-userid" target="userAccountConfirm"></transition>
+		<onentry>
+			<assign name="countInputUser" expr="0" />
+			<assign name="countInputDelivery" expr="0" />
+			<assign name="countInputReceivedCode" expr="0" />
+			<assign name="countInputCode" expr="0" />
+		</onentry>
+	</state>
+
+	<state id="welcome">
+		<datamodel>
+			<data id="message1" expr="Hello" />
+			<data id="message" expr="what can I do for you?" />
+		</datamodel>
+		<transition event="greeting" target="welcome"></transition>
+		<transition event="request-reset" target="askUser"></transition>
+		<transition event="request-reset-userid" target="userAccountConfirm"></transition>
+	</state>
+
+	<state id="askUser">
+		<onentry>
+			<assign name="countInputUser" expr="countInputUser+1" />
+		</onentry>
+		<datamodel>
+			<data id="message" expr="Please spells your User ID!" />
+			<data id="message1"
+				expr="Sorry, I can't recognize your userid, please spell again" />
+		</datamodel>
+		<transition event="request-reset" target="askUser"></transition>
+		<transition event="input-userid" target="userAccountConfirm">
+		</transition>
+		<transition event="quit" target="idle"></transition>
+	</state>
+
+	<state id="userAccountConfirm">
+		<datamodel>
+			<data id="message" expr="is your UserID? Please confirm" />
+		</datamodel>
+		<transition event="confirm-true" target="checkUserExisted"></transition>
+		<transition event="confirm-false">
+			<if cond="countInputUser&lt;3">
+				<send event="'goBackAskUser'" />
+				<!-- <elseif cond="x==3" /> -->
+				<!-- <send event="'inputText'" /> -->
+				<else />
+				<send event="'displayMessage'" />
+			</if>
+		</transition>
+		<transition event="goBackAskUser" target="askUser"></transition>
+		<transition event="displayMessage" target="inform"></transition>
+		<transition event="inputText" target="typeInputText"></transition>
+	</state>
+
+	<state id="typeInputText">
+		<datamodel>
+			<data id="message"
+				expr="Sorry, I can't recognize your userid. Please using text box and type your User ID." />
+		</datamodel>
+		<onentry>
+			<assign name="countInputUser" expr="countInputUser+1" />
+		</onentry>
+		<transition event="input-userid" target="userAccountConfirm"></transition>
+	</state>
+
+	<state id="checkUserExisted">
+		<transition event="user-existed" target="checkSelfService"></transition>
+		<transition event="user-notexisted">
+			<if cond="countInputUser&lt;3">
+				<send event="'goBackAskUser'" />
+				<!-- <elseif cond="x==3" /> -->
+				<!-- <send event="'inputText'" /> -->
+				<else />
+				<send event="'displayMessage'" />
+			</if>
+		</transition>
+		<transition event="goBackAskUser" target="askUser"></transition>
+		<transition event="displayMessage" target="inform"></transition>
+		<transition event="inputText" target="typeInputText"></transition>
+		<transition event="init-state" target="idle"></transition>
+	</state>
+
+	<state id="checkSelfService">
+		<transition event="user-not-register-service" target="accountNotRegisterService"></transition>
+		<transition event="user-register-service" target="checkUserStat"></transition>
+	</state>
+
+	<state id="checkUserStat">
+		<datamodel>
+			<data id="messageLocked" expr="Sorry, Your account doesn’t exits." />
+		</datamodel>
+		<transition event="user-normal" target="accountNormal"></transition>
+		<transition event="user-locked" target="accountLocked"></transition>
+		<transition event="init-state" target="idle"></transition>
+	</state>
+
+	<state id="accountNormal">
+		<datamodel>
+			<data id="message"
+				expr="Your account is not locked out. Do you need me to reset your password?" />
+		</datamodel>
+		<transition event="confirm-true" target="chooseDeliveryResetPassword"></transition>
+		<transition event="confirm-false" target="inform"></transition>
+	</state>
+
+	<state id="accountLocked">
+		<datamodel>
+			<data id="message"
+				expr="I notice that your account is locked out. Would you like me to unlock it?" />
+		</datamodel>
+		<transition event="confirm-true" target="chooseDeliveryUnlockAccount"></transition>
+		<transition event="confirm-false" target="inform"></transition>
+	</state>
+
+	<state id="chooseDeliveryUnlockAccount">
+		<datamodel>
+			<data id="message"
+				expr="Your account will be unlock. To do this, we provide SMS, email, phone call for verificiation. Please confirm your selected option" />
+		</datamodel>
+		<transition event="send-code-email" target="checkReceivedCode"></transition>
+		<transition event="send-code-sms" target="checkReceivedCode"></transition>
+		<transition event="send-code-phonecall" target="checkReceivedCode"></transition>
+		<transition event="wrong-delivery">
+			<if cond="countInputDelivery&lt;3">
+				<send event="'goBackChooseDelivery'" />
+				<!-- <elseif cond="x==3" /> -->
+				<!-- <send event="'inputText'" /> -->
+				<else />
+				<send event="'displayMessage'" />
+			</if>
+		</transition>
+		<transition event="goBackChooseDelivery" target="chooseDeliveryUnlockAccount"></transition>
+		<transition event="displayMessage" target="inform"></transition>
+	</state>
+
+	<state id="checkReceivedCode">
+		<transition event="confirm-true" target="unlockAccount"></transition>
+		<transition event="confirm-false">
+			<if cond="countInputReceivedCode&lt;3">
+				<send event="'goBackChooseDelivery'" />
+				<!-- <elseif cond="x==3" /> -->
+				<!-- <send event="'inputText'" /> -->
+				<else />
+				<send event="'displayMessage'" />
+			</if>
+		</transition>
+		<transition event="goBackChooseDelivery" target="chooseDeliveryUnlockAccount"></transition>
+		<transition event="displayMessage" target="inform"></transition>
+	</state>
+
+	<state id="unlockAccount">
+		<datamodel>
+			<data id="emailMessage"
+				expr="Please give me the code provided in that message and I will unlock your account" />
+		</datamodel>
+		<transition event="input-code" target="inputUnlockCode"></transition>
+		<transition event="init-state" target="idle"></transition>
+	</state>
+
+	<state id="inputUnlockCode">
+		<datamodel>
+			<data id="message" expr="The code is not correct, please speak again" />
+		</datamodel>
+		<onentry>
+			<assign name="countInputCode" expr="countInputCode+1" />
+		</onentry>
+		<transition event="correct-code" target="unlockAccountSuccess"></transition>
+		<transition event="incorrect-code">
+			<if cond="countInputCode&lt;3">
+				<send event="'goBackInputUnlockCode'" />
+				<!-- <elseif cond="x==3" /> -->
+				<!-- <send event="'inputText'" /> -->
+				<else />
+				<send event="'displayMessage'" />
+			</if>
+		</transition>
+		<transition event="goBackInputUnlockCode" target="inputUnlockCode"></transition>
+		<transition event="displayMessage" target="inform"></transition>
+	</state>
+
+	<state id="unlockAccountSuccess">
+		<datamodel>
+			<data id="message"
+				expr="I have unlock account for you, were you able to successfully log in?" />
+		</datamodel>
+		<transition event="login-confirm" target="loginConfirm"></transition>
+		<transition event="init-state" target="idle"></transition>
+	</state>
+
+	<state id="chooseDeliveryResetPassword">
+		<datamodel>
+			<data id="message"
+				expr="Your account will be reset. To do this, we provide SMS, email, phone call for verificiation. Please confirm your selected option" />
+		</datamodel>
+		<transition event="send-code-email" target="resetPassword"></transition>
+		<transition event="send-code-sms" target="resetPassword"></transition>
+		<transition event="send-code-phonecall" target="resetPassword"></transition>
+	</state>
+
+	<state id="resetPassword">
+		<datamodel>
+			<data id="emailMessage"
+				expr="I just sent an email to emailaddress. Please give me the code provided in that message and I will reset your password/(unlock your account)" />
+			<data id="smsMessage"
+				expr="I just sent a text message to your mobile phone. Please give me the code provided in that message and I will reset your password/(unlock your account)" />
+			<data id="phoneCallMessage"
+				expr="I will call you on your mobile phone and give you a code. Please enter that code below and I will reset your password/(unlock your account)" />
+		</datamodel>
+		<transition event="input-code" target="inputResetCode"></transition>
+		<transition event="init-state" target="idle"></transition>
+	</state>
+
+	<state id="inputResetCode">
+		<datamodel>
+			<data id="message" expr="The code is not correct, please speak again" />
+		</datamodel>
+		<transition event="correct-code" target="resetPasswordSuccess"></transition>
+		<transition event="incorrect-code" target="inputResetCode"></transition>
+	</state>
+
+	<state id="resetPasswordSuccess">
+		<datamodel>
+			<data id="message" expr="I have reset password for you, can you login?" />
+		</datamodel>
+		<transition event="login-confirm" target="loginConfirm"></transition>
+		<transition event="init-state" target="idle"></transition>
+	</state>
+
+	<state id="accountNotRegisterService">
+		<datamodel>
+			<data id="message"
+				expr="you haven't registerd self service. Do you want receive instruction email?" />
+		</datamodel>
+		<transition event="confirm-true" target="sendEmail"></transition>
+		<transition event="confirm-false" target="inform"></transition>
+	</state>
+
+	<state id="loginConfirm">
+		<datamodel>
+			<data id="message" expr="can you login?" />
+		</datamodel>
+		<transition event="confirm-true" target="inform"></transition>
+		<transition event="confirm-false" target="inform"></transition>
+	</state>
+
+	<state id="sendEmail">
+		<datamodel>
+			<data id="message"
+				expr="I have sent you an email.Thanks for using our services. Good bye" />
+		</datamodel>
+		<transition event="init-state" target="idle"></transition>
+	</state>
+
+	<state id="inform">
+		<datamodel>
+			<data id="message"
+				expr="Sorry for your time. I will tranfer your request to our Help Desk sections" />
+			<data id="message1" expr="Thanks for using our services. Good bye" />
+			<data id="message2"
+				expr="I still can't recognize your User ID. I will transfer your call to Help Desk section for further support. Thanks" />
+			<data id="message3" expr="Thanks for using our services. Good bye" />
+			<data id="message4"
+				expr="Ok, If you need further assistance, please contact the TTX Service Desk at 312.984.3709." />
+		</datamodel>
+		<transition event="init-state" target="idle"></transition>
+	</state>
+
+</scxml>

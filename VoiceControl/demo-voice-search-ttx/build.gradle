@@ -1,0 +1,102 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.7
+
+project.archivesBaseName = 'demo-voice-search-ttx'
+project.group='com.demo.voice.search'
+
+allprojects {
+   if (project.hasProperty('buildVersion')) {
+     project.version = project.buildVersion
+   } else {
+     project.version = 'SNAPSHOT'
+   }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': project.version
+    }
+}
+
+war {
+    sourceSets {
+    	main {
+        	resources {
+            	exclude '**'
+        	}
+    	}
+	}
+}
+
+task sourcesJar(type: Jar, dependsOn:classes) {
+     classifier = 'sources'
+     from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn:javadoc) {
+     classifier = 'javadoc'
+     from javadoc.destinationDir
+}
+
+artifacts {
+     archives sourcesJar
+     archives javadocJar
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+
+    compile 'org.springframework:spring-webmvc:4.1.1.RELEASE'
+
+	compile 'org.slf4j:slf4j-api:1.7.7'
+    compile 'org.apache.logging.log4j:log4j-api:2.0.2'
+    compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.0.2'
+    compile 'org.apache.logging.log4j:log4j-jcl:2.0.2'
+	compile 'org.apache.logging.log4j:log4j-core:2.0.2'
+	compile 'org.apache.logging.log4j:log4j-1.2-api:2.0.2'
+	compile 'org.apache.logging.log4j:log4j-web:2.0.2'
+	compile 'com.lmax:disruptor:3.3.0'
+	compile 'commons-logging:commons-logging:1.2'
+	
+	compile 'com.fasterxml.jackson.core:jackson-core:2.4.2'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.2'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.2'
+	
+	compile "org.apache.commons:commons-jexl:2.1.1"
+    compile 'commons-collections:commons-collections:3.2'
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+	compile 'com.google.guava:guava:17.0'
+	
+	compile "joda-time:joda-time:2.4"
+	compile "de.jollyday:jollyday:0.4.7"
+	compile "net.sourceforge.jregex:jregex:1.2_01"
+	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
+	compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.8.2'
+	compile group: 'commons-digester', name: 'commons-digester', version: '1.8.1'
+	compile group: 'commons-jexl', name: 'commons-jexl', version: '1.1'
+	compile group: 'commons-scxml', name: 'commons-scxml', version: '0.9'
+	compile group: 'commons-logging', name: 'commons-logging', version: '1.1.1'
+	compile group: 'xalan', name: 'xalan', version: '2.6.0'
+	
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.springframework:spring-test:4.1.1.RELEASE'
+
+  	compile files (
+		'lib/lookup-trie-api-SNAPSHOT-sources.jar',
+		'lib/crf-java-1.0.1.RELEASE.jar',
+		'lib/eds-common-1.0.1.RELEASE.jar',
+		'lib/eds-normalizer-1.0.1.RELEASE.jar',
+	)
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+

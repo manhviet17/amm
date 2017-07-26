@@ -1,0 +1,148 @@
+﻿<Other> i want to </Other> <Confirm> reset </Confirm> <Other> password </Other>
+<Other> hello my name is </Other> <Name> Micheal Smith </Name> <Other> please help me </Other> <Confirm> reset </Confirm> <Other> my password </Other>
+<Other> hello my name is </Other> <Name> Daniel Hernandez </Name> <Other> please help me </Other> <Confirm> reset </Confirm> <Other> my password </Other>
+<Other> hello my name is </Other> <Name> Thomas Lopez </Name> <Other> please help me </Other> <Confirm> reset </Confirm> <Other> my password </Other>
+<Other> hello my name is </Other> <Name> Nguyen Duy Thanh </Name> <Other> please help me </Other> <Confirm> reset </Confirm> <Other> my password </Other>
+<Other> hello my name is </Other> <Name> Nguyen Thanh Trung </Name> <Other> please help me </Other> <Confirm> reset </Confirm> <Other> my password </Other>
+<Other> hello I </Other> <Confirm> lost </Confirm> <Other> my password </Other> <Other> I need your help </Other>
+<Other> Help me </Other> <Confirm> reset </Confirm> <Other> my password </Other>
+<Other> I </Other> <Confirm> can't login </Confirm> <Other> please help me </Other> <Confirm> reset </Confirm> <Other> my password </Other>
+<Other> I'm </Other> <Name> Michael Smith </Name> <Other> help me </Other> <Confirm> reset </Confirm> <Other> my password please </Other>
+<Other> I'm </Other> <Name> Duy Thanh </Name> <Other> help me </Other> <Confirm> reset </Confirm> <Other> my password please </Other>
+<Other> I'm </Other> <Name> Nguyen Duy Thanh </Name> <Other> help me </Other> <Confirm> reset </Confirm> <Other> my password please </Other>
+<Other> I'm </Other> <Name> Michael </Name> <Other> help me </Other> <Confirm> reset </Confirm> <Other> my password please </Other>
+<Other> I'm </Other> <Name> Michael Smith Hernandez</Name> <Other> help me </Other> <Confirm> reset </Confirm> <Other> my password please </Other>
+<Other> I don't known what </Other> <Confirm> happened </Confirm> <Other> with my password </Other> <Other> please help me </Other>
+<Confirm> Reset </Confirm> <Other> my password </Other>
+<Other> I </Other> <Confirm> tried login </Confirm> <Other> to ttx today many times but I  </Other> <Confirm> can't </Confirm>
+<Other> i want to </Other> <Confirm> reset </Confirm> <Other> user id </Other> <UserId> jamjohnson </UserId>
+<Other> i want to </Other> <Confirm> reset </Confirm> <Other> user id </Other> <UserId> jam johnson </UserId>
+<Other> i want to </Other> <Confirm> reset </Confirm> <Other> user id </Other> <UserId> jam johnson </UserId>
+<Other> i want to </Other> <Confirm> reset </Confirm> <Other> user id </Other> <UserId> joh williams </UserId>
+<UserId> abcdefghjklmn </UserId>
+<UserId> jam johnson </UserId>
+<UserId> jamjohnson </UserId>
+<UserId> davidbeck </UserId>
+<UserId> abcdef </UserId>
+<UserId> abcdefghjoqei </UserId>
+<UserId> paulpogba </UserId>
+<UserId> paul.pogba </UserId>
+<UserId> jamjohnson </UserId>
+<UserId> micheal.smith </UserId>
+<UserId> jamjohnson </UserId>
+<UserId> johwilliams </UserId>
+<UserId> joh williams </UserId>
+<UserId> robertbrown </UserId>
+<UserId> robert brown </UserId>
+<UserId> davidjones </UserId>
+<UserId> williamgarcia </UserId>
+<UserId> maryroddiguez </UserId>
+<UserId> chrmiller </UserId>
+<UserId> jpshep.martinez </UserId>
+<UserId> richarddavis </UserId>
+<UserId> danhernandez </UserId>
+<UserId> thomas.lopez </UserId>
+<UserId> matgonzalez </UserId>
+<UserId> jenwilson </UserId>
+<UserId> chaandeson </UserId>
+<UserId> anthony.thomas </UserId>
+<UserId> patriciataylor </UserId>
+<UserId> linda.lee </UserId>
+<UserId> mark.moore </UserId>
+<UserId> elijackson </UserId>
+<UserId> eli jackson </UserId>
+<Other> My user id is </Other> <UserId> jam johnson </UserId>
+<Other> My user id is </Other> <UserId> duy thanh </UserId>
+<Other> My user id is </Other> <UserId> jamjohnson </UserId>
+<Other> My user id is </Other> <UserId> davidbeck </UserId>
+<Other> My user id is </Other> <UserId> abcdef </UserId>
+<Other> My user id is </Other> <UserId> abcd efghj oqei </UserId>
+<Other> My user id is </Other> <UserId> paulpogba </UserId>
+<Other> My user id is </Other> <UserId> paul.pogba </UserId>
+<Other> My account is </Other> <UserId> jamjohnson </UserId>
+<Other> My user id is </Other> <UserId> jam johnson </UserId>
+<Other> My user id is </Other> <UserId> duy thanh </UserId>
+<Other> My user id is </Other> <UserId> jam johnson </UserId>
+<Other> My user id is </Other> <UserId> david beck </UserId>
+<Other> My user id is </Other> <UserId> ab cd ef </UserId>
+<Other> My user id is </Other> <UserId> abcd efghj oqei </UserId>
+<Other> My user id is </Other> <UserId> paul pogba </UserId>
+<Other> My user id is </Other> <UserId> paul.pogba </UserId>
+<Other> My account is </Other> <UserId> jamj ohn son </UserId>
+<Other> I'm not sure about my account </Other> <Other> please check account </Other> <UserId> jamjohnson </UserId> <Other> for me </Other>
+<Other> I'm not sure about my account </Other> <Other> please check account </Other> <UserId> david beck ronaldo </UserId> <Other> for me </Other>
+<Other> I'm not sure about my account </Other> <Other> please check account </Other> <UserId> jam johnson </UserId> <Other> for me </Other>
+<Other> I'm not sure about my account </Other> <Other> please check account </Other> <UserId> chaan deson </UserId> <Other> for me </Other>
+<UserId> jamjohnson </UserId> <Other> is my account </Other>
+<UserId> david beck ronaldo </UserId> <Other> is my account </Other>
+<UserId> jam johnson </UserId> <Other> is my account </Other>
+<UserId> chaan deson </UserId> <Other> is my account </Other>
+<UserId> linda lee </UserId> <Other> is my user id </Other>
+<ConfirmTrue> yes </ConfirmTrue>
+<ConfirmFalse> no </ConfirmFalse>
+<Other> i </Other> <ConfirmFalse> don't </ConfirmFalse> <Other> want to unlock it </Other>
+<Other> i </Other> <ConfirmFalse> do not </ConfirmFalse> <Other> want to unlock it </Other>
+<Other> Please help me </Other> 
+<ConfirmTrue> unlock </ConfirmTrue> <Other> it </Other>
+<ConfirmTrue> do </ConfirmTrue> <Other> it for me </Other>
+<ConfirmFalse> don't </ConfirmFalse> <Other> do this </Other>
+<ConfirmFalse> do not </ConfirmFalse> <Other> do this </Other>
+<ConfirmFalse> no </ConfirmFalse> <Other> I </Other> <ConfirmFalse> don't </ConfirmFalse> <Other> want </Other>
+<ConfirmFalse> no </ConfirmFalse> <Other> I </Other> <ConfirmFalse> do not </ConfirmFalse> <Other> want </Other>
+<ConfirmFalse> unlock </ConfirmFalse>
+<Other> i </Other> <ConfirmFalse> don't </ConfirmFalse> <Other> want to reset its </Other>
+<Other> i </Other> <ConfirmFalse> do not </ConfirmFalse> <Other> want to reset its </Other>
+<Confirm> reset </Confirm> <Other> its </Other>
+<Delivery> sms </Delivery>
+<Delivery> email </Delivery>
+<Delivery> phone call </Delivery>
+<Delivery> sms </Delivery> <Other> please </Other>
+<Delivery> email </Delivery> <Other> please </Other>
+<Delivery> phone call </Delivery> <Other> please </Other>
+<Delivery> phone </Delivery> <Other> please </Other>
+<Other> i want to use </Other> <Delivery> sms </Delivery>
+<Other> i want to use </Other> <Delivery> email </Delivery>
+<Other> i want to use </Other> <Delivery> phone call </Delivery>
+<Other> i want to use </Other> <Delivery> phone </Delivery>
+<Other> using </Other> <Delivery> sms </Delivery>
+<Other> using </Other> <Delivery> email </Delivery>
+<Other> using </Other> <Delivery> phone call </Delivery>
+<Other> send me </Other> <Delivery> sms </Delivery>
+<Other> send me </Other> <Delivery> email </Delivery>
+<Other> send me </Other> <Delivery> phone call </Delivery>
+<Other> it's </Other> <ConfirmTrue> ok </ConfirmTrue> <Other> now </Other>
+<Other> i </Other> <ConfirmTrue> logged </ConfirmTrue> <Other> in </Other>
+<Other> i still </Other> <ConfirmFalse> can't </ConfirmFalse>
+<Code> 1 </Code>
+<Code> 12 </Code>
+<Code> 123 </Code>
+<Code> 1234 </Code>
+<Code> 12345 </Code>
+<Code> 54321 </Code>
+<Code> 21341 </Code>
+<Code> 1012 </Code>
+<Code> 1544 </Code>
+<Code> 154422 </Code>
+<Code> 11212112 </Code>
+<Other> my code is </Other> <Code> 1789234081731234897 </Code>
+<Other> it is </Other> <Code> 1789234081731234897 </Code>
+<Other> I want to </Other> <Confirm> reset password </Confirm> <Other> for my account </Other>
+<Other> I want to </Other> <Confirm> reset password </Confirm>
+<Other> I </Other> <Confirm> forget password </Confirm> <Other> please </Other> <Confirm> reset </Confirm> <Other> it </Other>
+<Other> i <Other/> <Confirm> don't remember </Confirm> password <Other> please </Other> <Confirm> reset </Confirm> <Other> it </Other>
+<Other> I </Other> <Confirm> forgets </Confirm> <Other> my account password please help my name is </Other> <Name> Micheal Smith </Name>
+<Other> please help I </Other> <Confirm> forgot </Confirm> <Other> my password </Other>
+<Other> My account seem to be </Other> <Confirm> locked </Confirm> <Other> help me </Other>
+<Other> Hello I need your help to </Other> <Confirm> unlock </Confirm> <Other> my account </Other>
+<Confirm> unlock </Confirm> <Other> my account </Other>
+<Confirm> Can't access </Confirm> <Other> to my account help me </Other> <Confirm> reset it </Confirm>
+<Other> I </Other> <Confirm> forgets </Confirm> <Other> my password and </Other> <Confirm> can't sign in </Confirm> <Other> help me </Other>
+<Other> Could you please help me I </Other> <Confirm> can't access </Confirm> <Other> to ttx </Other>
+<Confirm> unlock </Confirm> <Other> account </Other>
+<Confirm> reset </Confirm> <Other> account </Other>
+<Other> Hello please </Other> <Confirm> reset </Confirm <Other> my account my name is </Other> <Name> Micheal Smith </Name>
+<Other> I </Other> <Confirm> don't remember </Confirm> <Other> my account please help me </Other>
+<Other> I have </Other> <Confirm> trouble </Confirm> <Other> with my account I need </Other> <Confirm> help </Confirm>
+<Confirm> Help me </Confirm> <Other> my account having </Other> <Confirm> trouble </Confirm>
+<Other> My account suddenly not work today I tried many times but still </Other> <Confirm> can't access <Confirm> <Confirm> help me </Confirm>
+<Other> I'm </Other> <Confirm> no longer able access </Confirm> <Other> to my account need </Other> <Confirm> help </Confirm>

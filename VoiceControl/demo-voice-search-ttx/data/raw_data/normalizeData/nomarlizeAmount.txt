@@ -1,0 +1,7 @@
+﻿tỏi : tỉ
+củ : triệu
+cũ : triệu
+loét : lít
+triệu rưỡi : triệu 500000
+tỉ rưỡi : tỉ 500000000
+lít rưỡi : lít 50000
